@@ -1,3 +1,7 @@
+import { use } from 'react'
+import { useApiData, useApiHealth, useChartColors, useFilters } from '../services/apiReport'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
+
 const Dashboard = () => {
   const stats = [
     {
@@ -99,7 +103,26 @@ const Dashboard = () => {
 
       <div className="mt-6">
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h1 className="text-black">Report</h1>
+          {/* Charts Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div className="bg-white rounded-lg shadow p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">แนวโน้มยอดขาย</h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={useApiData({ 
+                  timeRange: '6months', 
+                  category: 'all', 
+                  month: '' }).data?.salesData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="sales" stroke="#8884d8" strokeWidth={2} />
+                  <Line type="monotone" dataKey="profit" stroke="#82ca9d" strokeWidth={2} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
         </div>
       </div>
 
