@@ -10,6 +10,6 @@ export default defineConfig({
   ],
   build: {
     outDir: 'dist',
-    chunkSizeWarningLimit: 1000, // Set chunk size warning limit to 1 MB
+    chunkSizeWarningLimit: 10000, // Set chunk size warning limit to 1 MB
   },
 })

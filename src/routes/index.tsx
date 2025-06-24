@@ -12,6 +12,7 @@ import ForgotPass from "../pages/ForgotPass"
 import AdminLayout from "../layouts/AdminLayout"
 import Dashboard from "../pages/Dashboard"
 import ProtectedRoute from "./ProtectedRoute"
+import ContactForm from "../pages/Contactform"
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
             {
                 path: "contact",
                 element: <Contact />
+            },
+            {
+                path: "contact-form",
+                element: <ContactForm />
             }
         ]
     },
