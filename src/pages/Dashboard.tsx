@@ -1,6 +1,7 @@
 import { use } from 'react'
 import { useApiData, useApiHealth, useChartColors, useFilters } from '../services/apiReport'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
+import { useReactTable, getCoreRowModel, flexRender, type ColumnDef } from '@tanstack/react-table'
 
 const Dashboard = () => {
   const stats = [
@@ -79,6 +80,32 @@ const Dashboard = () => {
     }
   }
 
+  // TanStack Table setup
+  const table = useReactTable({
+    data: useApiData({ 
+      timeRange: '6months', 
+      category: 'all', 
+      month: '' }).categories || [],
+    columns: [
+      {
+        header: 'หมวดหมู่',
+        accessorKey: 'name',
+        cell: info => info.getValue()
+      },
+      {
+        header: 'จำนวนสินค้า',
+        accessorKey: 'productCount',
+        cell: info => info.getValue()
+      },
+      {
+        header: 'ยอดขายรวม',
+        accessorKey: 'totalSales',
+        cell: info => `฿${info.getValue()?.toLocaleString()}`,
+      }
+    ] as ColumnDef<any>[],
+    getCoreRowModel: getCoreRowModel()
+  })
+
   return (
     <div className="space-y-6">
       
@@ -146,6 +173,37 @@ const Dashboard = () => {
             </div>
             
           </div>
+        </div>
+      </div>
+
+      {/* Read Category to table */}
+      <div className="mt-6">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h1 className='text-black text-xl'>หมวดหมู่สินค้า</h1>
+            <table className="table-auto w-full border">
+        <thead className="bg-gray-200">
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <th key={header.id} className="px-2 py-2 border text-black font-semibold">
+                  {flexRender(header.column.columnDef.header, header.getContext())}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map(row => (
+            <tr key={row.id} className="hover:bg-gray-100">
+              {row.getVisibleCells().map(cell => (
+                <td key={cell.id} className="px-2 py-2 border text-gray-700">
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
         </div>
       </div>
 
