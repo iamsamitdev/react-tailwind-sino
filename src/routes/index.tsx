@@ -11,6 +11,7 @@ import Register from "../pages/Register"
 import ForgotPass from "../pages/ForgotPass"
 import AdminLayout from "../layouts/AdminLayout"
 import Dashboard from "../pages/Dashboard"
+import ProtectedRoute from "./ProtectedRoute"
 
 const router = createBrowserRouter([
     {
@@ -59,7 +60,11 @@ const router = createBrowserRouter([
     },
     {
         path: "/admin",
-        element: <AdminLayout />,
+        element: (
+            <ProtectedRoute redirectPath="/auth/login">
+                <AdminLayout />
+            </ProtectedRoute>
+        ),
         children: [
             {
                 path: "dashboard",
