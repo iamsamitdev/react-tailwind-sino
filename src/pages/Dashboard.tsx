@@ -119,6 +119,7 @@ const Dashboard = () => {
     saveAs(file, 'table-data.xlsx')
   }
 
+  // Export to CSV function
   const exportToCSV = () => {
     const exportData = table.getRowModel().rows.map(row => row.original)
     const csv = unparse(exportData)
@@ -199,7 +200,18 @@ const Dashboard = () => {
       {/* Read Category to table */}
       <div className="mt-6">
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-4">
             <h1 className='text-black text-xl'>หมวดหมู่สินค้า</h1>
+            <div className="flex justify-end space-x-2 mb-4">
+              <button onClick={exportToExcel} className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
+                ส่งออกเป็น Excel
+              </button>
+              <button onClick={exportToCSV} className="bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition-colors">
+                ส่งออกเป็น CSV
+              </button>
+            </div>
+        </div>
+
             <table className="table-auto w-full border">
         <thead className="bg-gray-200">
           {table.getHeaderGroups().map(headerGroup => (
