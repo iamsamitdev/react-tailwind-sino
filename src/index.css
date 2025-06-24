@@ -9,3 +9,9 @@
 }
 
 @plugin "flowbite/plugin";
+
+@layer base {
+    html,body {
+        font-family: 'Anuphan', sans-serif;
+    }
+}
