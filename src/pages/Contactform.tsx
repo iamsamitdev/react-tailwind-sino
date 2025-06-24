@@ -45,7 +45,7 @@ export default function ContactForm() {
         type="text"
         {...register('name')}
         placeholder="ชื่อ"
-        className="border p-2 w-full"
+        className="border p-2 w-full text-black"
       />
       <input
         type="email"
