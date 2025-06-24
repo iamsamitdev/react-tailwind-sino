@@ -1,7 +1,9 @@
-import { use } from 'react'
-import { useApiData, useApiHealth, useChartColors, useFilters } from '../services/apiReport'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
+import { useApiData } from '../services/apiReport'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, ResponsiveContainer } from 'recharts'
 import { useReactTable, getCoreRowModel, flexRender, type ColumnDef } from '@tanstack/react-table'
+import * as XLSX from 'xlsx'
+import { saveAs } from 'file-saver'
+import { unparse } from 'papaparse'
 
 const Dashboard = () => {
   const stats = [
@@ -105,6 +107,24 @@ const Dashboard = () => {
     ] as ColumnDef<any>[],
     getCoreRowModel: getCoreRowModel()
   })
+
+  // Export to Excel function
+  const exportToExcel = () => {
+    const exportData = table.getRowModel().rows.map(row => row.original)
+    const worksheet = XLSX.utils.json_to_sheet(exportData)
+    const workbook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1')
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' })
+    const file = new Blob([excelBuffer], { type: 'application/octet-stream' })
+    saveAs(file, 'table-data.xlsx')
+  }
+
+  const exportToCSV = () => {
+    const exportData = table.getRowModel().rows.map(row => row.original)
+    const csv = unparse(exportData)
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+    saveAs(blob, 'table-data.csv')
+  }
 
   return (
     <div className="space-y-6">
