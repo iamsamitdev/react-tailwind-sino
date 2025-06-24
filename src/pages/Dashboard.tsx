@@ -77,13 +77,14 @@ const Dashboard = () => {
 
   return (
     <div className="space-y-6">
+      
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">แดชบอร์ด</h1>
           <p className="text-gray-600 mt-1">ภาพรวมธุรกิจของคุณวันนี้</p>
         </div>
-                 <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3">
            <select className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white text-gray-900 w-40">
              <option value="today">วันนี้</option>
              <option value="7days">7 วันที่แล้ว</option>
@@ -93,6 +94,12 @@ const Dashboard = () => {
           <button className="bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition-colors">
             ส่งออกรายงาน
           </button>
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h1 className="text-black">Report</h1>
         </div>
       </div>
 
