@@ -105,6 +105,7 @@ const Dashboard = () => {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           {/* Charts Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            
             <div className="bg-white rounded-lg shadow p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">แนวโน้มยอดขาย</h3>
               <ResponsiveContainer width="100%" height={300}>
@@ -122,6 +123,28 @@ const Dashboard = () => {
                 </LineChart>
               </ResponsiveContainer>
             </div>
+
+            <div className="bg-white rounded-lg shadow p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">อุปกรณ์ที่ใช้เข้าถึง</h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie data={useApiData({ 
+                    timeRange: '6months',
+                    category: 'all',
+                    month: '' }).data?.userStats}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={40}
+                    outerRadius={100}
+                    fill="#8884d8"
+                    label
+                  />
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            
           </div>
         </div>
       </div>
