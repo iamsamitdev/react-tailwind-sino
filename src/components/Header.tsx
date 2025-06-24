@@ -16,6 +16,18 @@ const Header: React.FC<HeaderProps> = ({ onToggleSidebar, isSidebarOpen }) => {
     { id: 3, title: 'รีวิวใหม่', message: 'ลูกค้าให้รีวิว 5 ดาว', time: '1 ชั่วโมง', unread: false },
   ]
 
+  // อ่านข้อมูล user จาก localStorage
+  const user = JSON.parse(localStorage.getItem('user') || '{}')
+  console.log('User data from localStorage:', user)
+
+  // สร้างฟังก์ชันสำหรับการ logout
+  const handleLogout = () => {
+    // ลบข้อมูล user จาก localStorage และเปลี่ยนเส้นทางไปยังหน้า login
+    localStorage.removeItem('user')
+    localStorage.removeItem('token')
+    window.location.href = '/auth/login'
+  }
+
   return (
     <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
       <div className="px-4 sm:px-6 lg:px-8">
@@ -133,7 +145,7 @@ const Header: React.FC<HeaderProps> = ({ onToggleSidebar, isSidebarOpen }) => {
                 <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center">
                   <span className="text-white font-medium text-sm">A</span>
                 </div>
-                <span className="hidden md:block ml-2 text-gray-700 font-medium">Admin</span>
+                <span className="hidden md:block ml-2 text-gray-700 font-medium">{user.fullname}</span>
                 <svg className="hidden md:block ml-1 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -144,8 +156,8 @@ const Header: React.FC<HeaderProps> = ({ onToggleSidebar, isSidebarOpen }) => {
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
                   <div className="py-1">
                     <div className="px-4 py-2 text-sm text-gray-700 border-b border-gray-200">
-                      <div className="font-medium">Admin User</div>
-                      <div className="text-xs text-gray-500">admin@sinofood.com</div>
+                      <div className="font-medium">{user.fullname}</div>
+                      <div className="text-xs text-gray-500">{user.email}</div>
                     </div>
                     <Link
                       to="/admin/profile"
@@ -163,11 +175,7 @@ const Header: React.FC<HeaderProps> = ({ onToggleSidebar, isSidebarOpen }) => {
                     </Link>
                     <div className="border-t border-gray-200"></div>
                     <button
-                      onClick={() => {
-                        setIsProfileOpen(false)
-                        // Handle logout
-                        window.location.href = '/auth/login'
-                      }}
+                      onClick={handleLogout}
                       className="block w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-red-50"
                     >
                       ออกจากระบบ

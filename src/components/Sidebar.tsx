@@ -99,6 +99,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     }
   ]
 
+  // อ่านข้อมูล user จาก localStorage
+  const user = JSON.parse(localStorage.getItem('user') || '{}')
+
   return (
     <>
       {/* Mobile overlay */}
@@ -205,8 +208,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 <span className="text-white font-medium text-xs">A</span>
               </div>
               <div className="ml-3">
-                <p className="text-sm font-medium text-gray-700">Admin User</p>
-                <p className="text-xs text-gray-500">ออนไลน์</p>
+                <p className="text-sm font-medium text-gray-700">{user.fullname}</p>
+                <p className="text-xs text-gray-500">{user.email}</p>
               </div>
             </div>
           </div>
